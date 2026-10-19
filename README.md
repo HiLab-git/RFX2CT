@@ -27,7 +27,10 @@ We use LIDC-IDRI and COLONOG with the following fixed splits:
 Case lists are provided in `splits/`. Prepare the paired CT/X-ray HDF5 files
 following [docs/DATA.md](docs/DATA.md). The model reconstructs 128 × 128 × 128 CT
 volumes from a single frontal X-ray (`xray1`) or biplanar frontal/lateral
-X-rays (`xray1`, `xray2`).
+X-rays (`xray1`, `xray2`). Preprocessing entry points for converted CT volumes
+are included in `preprocessing/`, with [input requirements and commands](docs/DATA.md#preprocessing).
+They follow X2CT-GAN's DRR geometry with a dataset-specific COLONOG adaptation.
+Plastimatch is required separately.
 
 ## How to Use
 
