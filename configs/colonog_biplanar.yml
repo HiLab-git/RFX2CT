@@ -1,0 +1,70 @@
+# batch_size is per GPU; use two GPUs for global batch size 2.
+experiment:
+  name: rfx2ct_colonog_biplanar
+  seed: 20260715
+model:
+  architecture: rfx2ct_direct_alignment_v1
+  base_channels: 32
+  time_embedding_dim: 128
+  norm_groups: 8
+  dropout: 0.0
+data:
+  dataroot: data/CTSpine1K-COLONOG-HDF5-256-2views-clean
+  train_split: splits/colonog/train.txt
+  val_split: splits/colonog/val.txt
+  test_split: splits/colonog/test.txt
+  xray_keys:
+  - xray1
+  - xray2
+  ct_key: ct
+  volume_size: 128
+  ct_min: 0.0
+  ct_max: 2500.0
+  value_space: normalized_0_1
+  tensor_axes: array_DHW
+projectnet:
+  feature_channels:
+  - 4
+  - 8
+  - 16
+  view_angles:
+    xray1: 0.0
+    xray2: 90.0
+  view_detector_flips:
+    xray1: 1.0
+    xray2: -1.0
+rectified_flow:
+  time_convention: noise_to_ct
+  sample_steps: 25
+  clamp_sample: true
+self_rollout:
+  probability: 0.1
+  warmup_epochs: 20
+  steps: 2
+  min_t: 0.2
+  max_t: 0.9
+train:
+  epochs: 200
+  batch_size: 1
+  grad_accum_steps: 1
+  num_workers: 4
+  lr: 0.0001
+  beta1: 0.9
+  beta2: 0.999
+  weight_decay: 0.0
+  amp: true
+  grad_clip_norm: 1.0
+  save_epoch_freq: 10
+  log_freq: 20
+  use_ema: true
+  ema_decay: 0.9999
+validation:
+  sample_every_epochs: 20
+  sample_count: 5
+  sample_steps: 25
+  use_ema: true
+  seed: 20260715
+  mha_depth_order: x2ct
+output:
+  out_dir: checkpoints
+  tag: rfx2ct_colonog_biplanar

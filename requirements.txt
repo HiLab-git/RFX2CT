@@ -1,0 +1,11 @@
+# Python 3.9 environment used for RFX2CT.
+torch==1.13.1
+torchvision==0.14.1
+numpy==1.26.4
+scipy==1.10.1
+h5py==3.14.0
+PyYAML==6.0.3
+SimpleITK==2.5.3
+scikit-image==0.24.0
+Pillow==11.3.0
+nibabel==4.0.1
